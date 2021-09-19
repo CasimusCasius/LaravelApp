@@ -20,7 +20,19 @@ Route::get('/', function ()
 
 Route::get('/hello/{name}', 'HelloController@hello');
 
-Route::get('/example', function ()
+$uri = '/example';
+Route::get($uri, fn () => 'Jestem arrow GET');
+Route::post($uri, fn () => 'Jestem POST');
+Route::put($uri, fn () => 'Jestem PUT');
+Route::patch($uri, fn () => 'Jestem PATCH');
+Route::delete($uri, fn () => 'Jestem DELETE');
+Route::options($uri, fn () => 'Jestem OPTIONS');
+
+Route::match(['get', 'post'], '/match', function ()
 {
-    return 'Jestem GET';
+    return 'Jestem GET i POST';
 });
+
+Route::any('/any', fn () => 'Wszystkie metody');
+
+Route::view('/view/route', 'route.view');
