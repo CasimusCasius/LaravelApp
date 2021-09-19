@@ -8,6 +8,6 @@ class UserController extends Controller
 {
     public function list()
     {
-        dump('List action');
+        return view('user.list');
     }
 }
