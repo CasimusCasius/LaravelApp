@@ -20,11 +20,26 @@ Route::get('/', function ()
     return view('welcome');
 });
 
-Route::get('users', 'UserController@list')->name('get.users');
+Route::get('users', 'UserController@list')
+    ->name('get.users');
 
-Route::get('users/{id}',  'User\ProfilController@show')->name('get.user.profile')->where(['id' => '[0-9]']);
+Route::get('users/{userId}', 'UserController@show')
+    ->name('get.user.show');
 
-Route::get('users/{id}/address', 'User\ShowAddress')->name('get.user.address')->where(['id' => '[0-9]+']);
+//Route::get('users/{id}/profile', 'User\ProfilController@show')
+//    ->name('get.user.profile');
+
+Route::get('users/{id}/address', 'User\ShowAddress')
+    ->where(['id' => '[0-9]+'])
+    ->name('get.users.address');
 
 //Route::resource('games', 'GameController');
-Route::resource('games', 'GameController')->only(['index', 'show']);
+Route::resource('games', 'GameController')
+    ->only([
+        'index', 'show'
+    ]);
+
+Route::resource('admin/games', 'GameController')
+    ->only([
+        'store', 'create', 'destroy'
+    ]);

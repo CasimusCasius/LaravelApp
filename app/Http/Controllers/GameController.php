@@ -3,23 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class GameController extends Controller
 {
+    // CRUD
+    // C - create
+    // R - read
+    // U - update
+    // D - delete
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        //
+        dump('index');
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -40,10 +45,10 @@ class GameController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $game
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($game)
     {
         //
     }
