@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "axios": "^0.21",
-        "bootstrap": "^4.6.0",
+        "bootstrap": "^5.0.0",
         "jquery": "^3.6",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
@@ -19,6 +19,17 @@
         "postcss": "^8.1.14",
         "resolve-url-loader": "^4.0.0",
         "sass": "^1.32.11",
-        "sass-loader": "^11.0.1"
+        "sass-loader": "^11.0.1",
+        "browser-sync": "^2.26.12",
+        "browser-sync-webpack-plugin": "^2.0.1",
+        "cross-env": "^7.0",
+        "@fortawesome/fontawesome-free": "^5.13.0",
+        "@fortawesome/fontawesome-free-regular": "^5.0.13",
+        "@fortawesome/free-brands-svg-icons": "^5.13.0",
+        "@fortawesome/free-solid-svg-icons": "^5.13.0",
+        "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "startbootstrap-sb-admin": "^7.0.3"
     }
 }

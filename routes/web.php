@@ -15,10 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function ()
-{
-    return view('welcome');
-});
+Route::get('/', 'Home\MainPage')
+    ->name('home.mainPage');
 
 Route::get('users', 'UserController@list')
     ->name('get.users');
