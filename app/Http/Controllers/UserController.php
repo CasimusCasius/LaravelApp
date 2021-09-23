@@ -15,20 +15,29 @@ class UserController extends Controller
 
         $faker = Factory::create();
         $count = $faker->numberBetween(3, 15);
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; $i++)
+        {
             $users[] = [
                 'id' => $faker->numberBetween(1, 1000),
                 'name' => $faker->firstName
             ];
         }
 
+        $session = $request->session();
+        $session->put('prevAction', __METHOD__ . ':' . time());
+
         return view('user.list', [
             'users' => $users
         ]);
     }
 
-    public function show(int $userId)
+    public function show(Request $request, int $userId)
     {
+        $prevAction = $request->session()->get('prevAction');
+
+
+
+        dump($prevAction);
         $faker = Factory::create();
         $user = [
             'id' => $userId,
