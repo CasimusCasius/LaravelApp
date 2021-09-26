@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class GameController extends Controller
 {
@@ -13,14 +17,21 @@ class GameController extends Controller
     // U - update
     // D - delete
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
+    public function index(): View
     {
-        dump('index');
+        $games = DB::table('games')->select(['id', 'title', 'genere_id', 'score'])->get();
+
+
+
+        return view('game.list', ['games' => $games]);
+    }
+
+    public function show(int $gameId): View
+    {
+        //$game = DB::table('games')->where('id', $gameId)->first();
+        $game = DB::table('games')->find($gameId);
+
+        return view('game.show', ['game' => $game]);
     }
 
     /**
@@ -30,6 +41,8 @@ class GameController extends Controller
     {
         //
     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -42,16 +55,7 @@ class GameController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $game
-     * @return \Illuminate\Http\Response
-     */
-    public function show($game)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
