@@ -1,22 +1,14 @@
 <?php
 
-declare(strict_types=1);
+namespace App\Http\Controllers\Game;
 
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
-class GameController extends Controller
+class EloquentController extends Controller
 {
-    // CRUD
-    // C - create
-    // R - read
-    // U - update
-    // D - delete
-
     public function index(): View
     {
         $games = DB::table('games')
@@ -28,7 +20,7 @@ class GameController extends Controller
             //->get();
             ->paginate(10);
 
-        return view('game.list', ['games' => $games]);
+        return view('game.eloquent.list', ['games' => $games]);
     }
 
 
@@ -57,7 +49,7 @@ class GameController extends Controller
 
 
         return view(
-            'game.dashboard',
+            'game.eloquent.dashboard',
             [
 
                 'bestGames' => $bestGames,
@@ -73,65 +65,6 @@ class GameController extends Controller
         $game = DB::table('games')->join('generes', 'games.genere_id', '=', 'generes.id')->where('games.id', $gameId)
             ->first();
         //dd($game);
-        return view('game.show', ['game' => $game]);
-    }
-
-
-
-    /**
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('game.eloquent.show', ['game' => $game]);
     }
 }
