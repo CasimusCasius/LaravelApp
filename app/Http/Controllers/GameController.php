@@ -19,18 +19,49 @@ class GameController extends Controller
 
     public function index(): View
     {
-        $games = DB::table('games')->select(['id', 'title', 'genere_id', 'score'])->get();
+        $games = DB::table('games')
+            ->join('generes', 'games.genere_id', '=', 'generes.id')
+            ->select(['games.id', 'games.title', 'generes.name as genres_name', 'games.score'])
+            ->orderBy('games.score', 'desc')
+            ->get();
+
+
+        $bestGames = DB::table('games')
+            ->join('generes', 'games.genere_id', '=', 'generes.id')
+            ->select(['games.id', 'games.title', 'generes.name as genres_name', 'games.score'])->where('games.score', '>=', 9)->get();
+
+        $stats = [
+            'count' => DB::table('games')->count(),
+            'countScoreGt7' => DB::table('games')->where('score', '>', 7)->count(),
+            'max' => DB::table('games')->max('score'),
+            'min' => DB::table('games')->min('score'),
+            'avg' => DB::table('games')->avg('score')
+        ];
+
+        $scoreStats = DB::table('games')->select('score', DB::raw('count(*) as count'))
+            ->groupBy('score')
+            ->orderBy('score', 'desc')
+            ->get();
 
 
 
-        return view('game.list', ['games' => $games]);
+        return view(
+            'game.list',
+            [
+                'games' => $games,
+                'bestGames' => $bestGames,
+                'scoreStats' => $scoreStats,
+                'stats' => $stats
+            ]
+        );
     }
 
     public function show(int $gameId): View
     {
         //$game = DB::table('games')->where('id', $gameId)->first();
-        $game = DB::table('games')->find($gameId);
-
+        $game = DB::table('games')->join('generes', 'games.genere_id', '=', 'generes.id')->where('games.id', $gameId)
+            ->first();
+        //dd($game);
         return view('game.show', ['game' => $game]);
     }
 

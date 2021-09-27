@@ -30,7 +30,7 @@ class GameSeeder extends Seeder
                     'description' => $faker->sentence,
                     'publisher' => $faker->randomElement(['Atari', 'SEGA', 'Relict', 'CD Project', 'Indepence', 'Ubisoft', 'EA']),
                     'genere_id' => $faker->numberBetween(1, 5),
-                    'score' => $faker->numberBetween(1, 100),
+                    'score' => $faker->numberBetween(1, 10),
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ];

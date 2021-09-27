@@ -9,7 +9,7 @@
                 <li>id: {{$game->id}}</li>
                 <li>Nazwa: {{$game->title}}</li>
                 <li>Wydawca: {{$game->publisher}}</li>
-                <li>Kategoria: {{$game->genere_id}}</li>
+                <li>Kategoria: {{$game->name}}</li>
                 <li>
                     Opis:
                     <div>{{$game->description}}</div>
