@@ -22,10 +22,18 @@ class GameController extends Controller
         $games = DB::table('games')
             ->join('generes', 'games.genere_id', '=', 'generes.id')
             ->select(['games.id', 'games.title', 'generes.name as genres_name', 'games.score'])
-            ->orderBy('games.score', 'desc')
+            // ->orderBy('games.score', 'desc')
+            // ->limit(10)
+            // ->offset(20)
             ->get();
 
+        return view('game.list', ['games' => $games]);
+    }
 
+
+
+    public function dashboard(): View
+    {
         $bestGames = DB::table('games')
             ->join('generes', 'games.genere_id', '=', 'generes.id')
             ->select(['games.id', 'games.title', 'generes.name as genres_name', 'games.score'])->where('games.score', '>=', 9)->get();
@@ -38,17 +46,19 @@ class GameController extends Controller
             'avg' => DB::table('games')->avg('score')
         ];
 
-        $scoreStats = DB::table('games')->select('score', DB::raw('count(*) as count'))
+        $scoreStats = DB::table('games')
+            ->select('score', DB::raw('count(*) as count'))
             ->groupBy('score')
-            ->orderBy('score', 'desc')
+            ->having('count', '>=', 10)
+            ->orderBy('count', 'desc')
             ->get();
 
 
 
         return view(
-            'game.list',
+            'game.dashboard',
             [
-                'games' => $games,
+
                 'bestGames' => $bestGames,
                 'scoreStats' => $scoreStats,
                 'stats' => $stats
@@ -64,6 +74,8 @@ class GameController extends Controller
         //dd($game);
         return view('game.show', ['game' => $game]);
     }
+
+
 
     /**
      * @return Response
