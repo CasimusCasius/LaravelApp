@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,14 +15,64 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function ()
-{
-    return view('welcome');
-});
+Route::get('/', 'Home\MainPage')
+    ->name('home.mainPage');
 
-Route::get('/hello/{name}', 'HelloController@hello');
+// Users
+Route::get('users', 'UserController@list')
+    ->name('get.users');
 
-Route::get('/example', function ()
-{
-    return 'Jestem GET';
-});
+Route::get('users/{userId}', 'UserController@show')
+    ->name('get.user.show');
+
+//Route::get('users/{id}/profile', 'User\ProfilController@show')
+//    ->name('get.user.profile');
+
+Route::get('users/{id}/address', 'User\ShowAddress')
+    ->where(['id' => '[0-9]+'])
+    ->name('get.users.address');
+
+// Games
+
+Route::group(
+    [
+        'prefix' => 'b/games',
+        'namespace' => 'Game',
+        'as' => 'games.b.'
+    ],
+    function ()
+    {
+        Route::get('dashboard', 'BuilderController@dashboard')
+            ->name('dashboard');
+
+        Route::get('', 'BuilderController@index')
+            ->name('list');
+
+        Route::get('{game}', 'BuilderController@show')
+            ->name('show');
+    }
+);
+Route::group(
+    [
+        'prefix' => 'e/games',
+        'namespace' => 'Game',
+        'as' => 'games.e.'
+    ],
+    function ()
+    {
+        Route::get('dashboard', 'EloquentController@dashboard')
+            ->name('dashboard');
+
+        Route::get('', 'EloquentController@index')
+            ->name('list');
+
+        Route::get('{game}', 'EloquentController@show')
+            ->name('show');
+    }
+);
+
+
+// Route::resource('games', 'BuilderController')
+//     ->only([
+//         'index', 'show'
+//     ]);
