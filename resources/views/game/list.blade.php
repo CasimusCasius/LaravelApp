@@ -41,6 +41,7 @@
                         </tbody>
                     </table>
                </div>
+            {{ $games->links() }}
            </div>
        </div>
    </div>

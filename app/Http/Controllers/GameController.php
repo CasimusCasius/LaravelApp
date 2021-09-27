@@ -25,7 +25,8 @@ class GameController extends Controller
             // ->orderBy('games.score', 'desc')
             // ->limit(10)
             // ->offset(20)
-            ->get();
+            //->get();
+            ->paginate(10);
 
         return view('game.list', ['games' => $games]);
     }
