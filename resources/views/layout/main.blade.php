@@ -7,7 +7,7 @@
         <title>@yield('title', $applicationName)</title>
         <meta name="description" content=""/>
 
-        <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     </head>
     <body class="sb-nav-fixed">
 

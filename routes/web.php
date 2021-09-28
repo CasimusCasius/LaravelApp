@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Middleware\RequestPage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -80,3 +81,7 @@ Route::group(
 //     ->only([
 //         'index', 'show'
 //     ]);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
