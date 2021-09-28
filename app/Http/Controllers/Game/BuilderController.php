@@ -21,8 +21,8 @@ class BuilderController extends Controller
     public function index(): View
     {
         $games = DB::table('games')
-            ->join('generes', 'games.genere_id', '=', 'generes.id')
-            ->select(['games.id', 'games.title', 'generes.name as genres_name', 'games.score'])
+            ->join('genres', 'games.genre_id', '=', 'genres.id')
+            ->select(['games.id', 'games.title', 'genres.name as genres_name', 'games.score'])
             // ->orderBy('games.score', 'desc')
             // ->limit(10)
             // ->offset(20)
@@ -37,8 +37,8 @@ class BuilderController extends Controller
     public function dashboard(): View
     {
         $bestGames = DB::table('games')
-            ->join('generes', 'games.genere_id', '=', 'generes.id')
-            ->select(['games.id', 'games.title', 'generes.name as genres_name', 'games.score'])->where('games.score', '>=', 9)->get();
+            ->join('genres', 'games.genre_id', '=', 'genres.id')
+            ->select(['games.id', 'games.title', 'genres.name as genres_name', 'games.score'])->where('games.score', '>=', 9)->get();
 
         $stats = [
             'count' => DB::table('games')->count(),
@@ -71,7 +71,7 @@ class BuilderController extends Controller
     public function show(int $gameId): View
     {
         //$game = DB::table('games')->where('id', $gameId)->first();
-        $game = DB::table('games')->join('generes', 'games.genere_id', '=', 'generes.id')->where('games.id', $gameId)
+        $game = DB::table('games')->join('genres', 'games.genre_id', '=', 'genres.id')->where('games.id', $gameId)
             ->first();
         //dd($game);
         return view('game.builder.show', ['game' => $game]);
