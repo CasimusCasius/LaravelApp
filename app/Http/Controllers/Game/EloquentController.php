@@ -11,7 +11,51 @@ class EloquentController extends Controller
 {
     public function index(): View
     {
-        $games = Game::with('genre')
+
+        // $newGame = new Game();
+        // $newGame->title = 'Tomb Rider';
+        // $newGame->description = 'Grobowce, przygoda, skarby';
+        // $newGame->score = 9;
+        // $newGame->publisher = 'Eidos';
+        // $newGame->genre_id = 4;
+        // $newGame->save();
+
+        // Game::create([
+        //     'title' => 'Dune 2',
+        //     'description' => ' Strategia w świecie pustynnym',
+        //     'score' => 10,
+        //     'publisher' => 'Eidos',
+        //     'genre_id' => 5
+        // ]);
+
+        /*
+        $newGame = new Game(
+            [
+                'title' => 'Commandos',
+                'description' => ' Skradanka w realich II Wojny Światowej',
+                'score' => 10,
+                'publisher' => 'Eidos',
+                'genre_id' => 5
+            ]
+        );
+        $newGame->save(); */
+
+        //$game = Game::find(104);
+        // $game->description = 'Skradanka w realich II WW ';
+        // $game->save();
+        // $gamesIds = [87, 89, 93, 100];
+
+        // Game::whereIn('id', $gamesIds)
+        //     ->update([
+        //         'description' => 'bez pobierania'
+        //     ]);
+        //
+        //$game = Game::find(104);
+        //$game->delete();
+
+        //Game::destroy(120,121) -
+
+        $games = Game::with('genre') //->publisher('Eidos')
             ->orderBy('created_at')
             ->paginate(10);
 

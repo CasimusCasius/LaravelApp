@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Game extends Model
 {
+
+
     // WARTOSCI DOMYSLNE - nie wymagają ustawienia
     // protected $table = 'games';   - jeżeli nazwa tabeli jest iina niż liczba mnoga od klasy wymaga zmiany
     // protected $primaryKey = 'id'; - jeżeli klucz główny jest w kolumnie innej niz id
@@ -20,10 +22,17 @@ class Game extends Model
     //      'score'=> 5
     // ];                           - wartości domyślne dla kolum
 
+    protected $fillable = [  //konieczne przy Model::create()
+        'title', 'description', 'score', 'publisher', 'genre_id'
+
+    ];
+
     // protected static function booted()
     // {
     //     static::addGlobalScope(new LastWeekScope);
     // }
+
+
 
     //relations
     public function genre(): ?BelongsTo
@@ -44,5 +53,9 @@ class Game extends Model
     public function scopeGenre(Builder $query, int $genreId): Builder
     {
         return $query->where('gemdre_id', $genreId);
+    }
+    public function scopePublisher(Builder $query, string $publisher): Builder
+    {
+        return $query->where('publisher', $publisher);
     }
 }
