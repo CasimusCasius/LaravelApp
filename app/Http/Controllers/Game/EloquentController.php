@@ -11,18 +11,20 @@ class EloquentController extends Controller
 {
     public function index(): View
     {
-        $games = Game::orderBy('created_at')->paginate(10);
+        $games = Game::with('genre')
+            ->orderBy('created_at')
+            ->paginate(10);
 
         return view('game.eloquent.list', ['games' => $games]);
     }
 
     public function dashboard(): View
     {
-        $bestGames = Game::where('games.score', '>=', 9)->get();
+        $bestGames = Game::best()->get();
 
-        $oldBestGames = DB::table('games')
-            ->join('genres', 'games.genre_id', '=', 'genres.id')
-            ->select(['games.id', 'games.title', 'genres.name as genres_name', 'games.score'])->where('games.score', '>=', 9)->get();
+        // $oldBestGames = DB::table('games')
+        //     ->join('genres', 'games.genre_id', '=', 'genres.id')
+        //     ->select(['games.id', 'games.title', 'genres.name as genres_name', 'games.score'])->where('games.score', '>=', 9)->get();
 
         $stats = [
             'count' => Game::count(),
