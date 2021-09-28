@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Game;
 
+use App\Models\Game;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
@@ -11,47 +11,36 @@ class EloquentController extends Controller
 {
     public function index(): View
     {
-        $games = DB::table('games')
-            ->join('generes', 'games.genere_id', '=', 'generes.id')
-            ->select(['games.id', 'games.title', 'generes.name as genres_name', 'games.score'])
-            // ->orderBy('games.score', 'desc')
-            // ->limit(10)
-            // ->offset(20)
-            //->get();
-            ->paginate(10);
+        $games = Game::orderBy('created_at')->paginate(10);
 
         return view('game.eloquent.list', ['games' => $games]);
     }
 
-
-
     public function dashboard(): View
     {
-        $bestGames = DB::table('games')
-            ->join('generes', 'games.genere_id', '=', 'generes.id')
-            ->select(['games.id', 'games.title', 'generes.name as genres_name', 'games.score'])->where('games.score', '>=', 9)->get();
+        $bestGames = Game::where('games.score', '>=', 9)->get();
+
+        $oldBestGames = DB::table('games')
+            ->join('genres', 'games.genre_id', '=', 'genres.id')
+            ->select(['games.id', 'games.title', 'genres.name as genres_name', 'games.score'])->where('games.score', '>=', 9)->get();
 
         $stats = [
-            'count' => DB::table('games')->count(),
-            'countScoreGt7' => DB::table('games')->where('score', '>', 7)->count(),
-            'max' => DB::table('games')->max('score'),
-            'min' => DB::table('games')->min('score'),
-            'avg' => DB::table('games')->avg('score')
+            'count' => Game::count(),
+            'countScoreGt7' => Game::where('score', '>', 7)->count(),
+            'max' => Game::max('score'),
+            'min' => Game::min('score'),
+            'avg' => Game::avg('score')
         ];
 
-        $scoreStats = DB::table('games')
-            ->select('score', DB::raw('count(*) as count'))
+        $scoreStats = Game::select('score', Game::raw('count(*) as count'))
             ->groupBy('score')
             ->having('count', '>=', 10)
             ->orderBy('count', 'desc')
             ->get();
 
-
-
         return view(
             'game.eloquent.dashboard',
             [
-
                 'bestGames' => $bestGames,
                 'scoreStats' => $scoreStats,
                 'stats' => $stats
@@ -61,10 +50,8 @@ class EloquentController extends Controller
 
     public function show(int $gameId): View
     {
-        //$game = DB::table('games')->where('id', $gameId)->first();
-        $game = DB::table('games')->join('generes', 'games.genere_id', '=', 'generes.id')->where('games.id', $gameId)
-            ->first();
-        //dd($game);
+        $game = Game::findOrFail($gameId);
+
         return view('game.eloquent.show', ['game' => $game]);
     }
 }

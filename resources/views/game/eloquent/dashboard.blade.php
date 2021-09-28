@@ -118,7 +118,7 @@
                                 <th>Lp</th>
                                 <th>Tytuł</th>
                                 <th>Ocena</th>
-                                <th>Kategoria</th>
+                                <th>Gatunek</th>
                                 <th>Opcje</th>
                             </tr>
                         </thead>
@@ -127,7 +127,7 @@
                                 <th>Lp</th>
                                 <th>Tytuł</th>
                                 <th>Ocena</th>
-                                <th>Kategoria</th>
+                                <th>Gatunek</th>
                                 <th>Opcje</th>
                             </tr>
                         </tfoot>
@@ -137,7 +137,7 @@
                                     <td>{{ $loop->iteration}}</td>
                                     <td>{{ $game->title}}</td>
                                     <td>{{ $game->score}}</td>
-                                    <td>{{ $game->genres_name}}</td>
+                                    <td>{{ $game->genre->name}}</td>
                                     <td>
                                         <a href="{{route('games.e.show',['game'=>$game->id])}}">Szczegóły</a>
                                     </td>
