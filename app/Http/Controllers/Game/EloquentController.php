@@ -6,10 +6,11 @@ use App\Models\Game;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class EloquentController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
 
         // $newGame = new Game();
@@ -53,11 +54,14 @@ class EloquentController extends Controller
         //$game = Game::find(104);
         //$game->delete();
 
-        //Game::destroy(120,121) -
+        //Game::destroy(120,121)
 
         $games = Game::with('genre') //->publisher('Eidos')
             ->orderBy('created_at')
             ->paginate(10);
+
+
+
 
         return view('game.eloquent.list', ['games' => $games]);
     }

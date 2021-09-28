@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Middleware\RequestPage;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,7 +47,8 @@ Route::group(
             ->name('dashboard');
 
         Route::get('', 'BuilderController@index')
-            ->name('list');
+            ->name('list')
+            ->middleware([RequestPage::class]);
 
         Route::get('{game}', 'BuilderController@show')
             ->name('show');
@@ -56,7 +58,8 @@ Route::group(
     [
         'prefix' => 'e/games',
         'namespace' => 'Game',
-        'as' => 'games.e.'
+        'as' => 'games.e.',
+        //  'middleware' => ['profiling']
     ],
     function ()
     {
@@ -64,7 +67,8 @@ Route::group(
             ->name('dashboard');
 
         Route::get('', 'EloquentController@index')
-            ->name('list');
+            ->name('list')
+            ->middleware([RequestPage::class]);
 
         Route::get('{game}', 'EloquentController@show')
             ->name('show');
