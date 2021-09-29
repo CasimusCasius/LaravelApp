@@ -17,71 +17,67 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'Home\MainPage')
-    ->name('home.mainPage');
+Route::middleware(['auth'])->group(function ()
+{
 
-// Users
-Route::get('users', 'UserController@list')
-    ->name('get.users');
+    Route::get('/', 'Home\MainPage')
+        ->name('home.mainPage');
 
-Route::get('users/{userId}', 'UserController@show')
-    ->name('get.user.show');
+    // Users
+    Route::get('users', 'User\UserController@list')
+        ->name('get.users');
 
-//Route::get('users/{id}/profile', 'User\ProfilController@show')
-//    ->name('get.user.profile');
+    Route::get('users/{userId}', 'User\UserController@show')
+        ->name('get.user.show');
 
-Route::get('users/{id}/address', 'User\ShowAddress')
-    ->where(['id' => '[0-9]+'])
-    ->name('get.users.address');
+    //Route::get('users/{id}/profile', 'User\ProfilController@show')
+    //    ->name('get.user.profile');
 
-// Games
+    Route::get('users/{id}/address', 'User\ShowAddress')
+        ->where(['id' => '[0-9]+'])
+        ->name('get.users.address');
 
-Route::group(
-    [
-        'prefix' => 'b/games',
-        'namespace' => 'Game',
-        'as' => 'games.b.'
-    ],
-    function ()
-    {
-        Route::get('dashboard', 'BuilderController@dashboard')
-            ->name('dashboard');
+    // Games
 
-        Route::get('', 'BuilderController@index')
-            ->name('list')
-            ->middleware([RequestPage::class]);
+    Route::group(
+        [
+            'prefix' => 'b/games',
+            'namespace' => 'Game',
+            'as' => 'games.b.'
+        ],
+        function ()
+        {
+            Route::get('dashboard', 'BuilderController@dashboard')
+                ->name('dashboard');
 
-        Route::get('{game}', 'BuilderController@show')
-            ->name('show');
-    }
-);
-Route::group(
-    [
-        'prefix' => 'e/games',
-        'namespace' => 'Game',
-        'as' => 'games.e.',
-        //  'middleware' => ['profiling']
-    ],
-    function ()
-    {
-        Route::get('dashboard', 'EloquentController@dashboard')
-            ->name('dashboard');
+            Route::get('', 'BuilderController@index')
+                ->name('list')
+                ->middleware([RequestPage::class]);
 
-        Route::get('', 'EloquentController@index')
-            ->name('list')
-            ->middleware([RequestPage::class]);
+            Route::get('{game}', 'BuilderController@show')
+                ->name('show');
+        }
+    );
+    Route::group(
+        [
+            'prefix' => 'e/games',
+            'namespace' => 'Game',
+            'as' => 'games.e.',
+        ],
+        function ()
+        {
+            Route::get('dashboard', 'EloquentController@dashboard')
+                ->name('dashboard');
 
-        Route::get('{game}', 'EloquentController@show')
-            ->name('show');
-    }
-);
+            Route::get('', 'EloquentController@index')
+                ->name('list')
+                ->middleware([RequestPage::class]);
 
+            Route::get('{game}', 'EloquentController@show')
+                ->name('show');
+        }
+    );
 
-// Route::resource('games', 'BuilderController')
-//     ->only([
-//         'index', 'show'
-//     ]);
-
+    Route::get('/home', [App\Http\Controllers\Home\HomeController::class, 'index'])->name('home');
+});
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
