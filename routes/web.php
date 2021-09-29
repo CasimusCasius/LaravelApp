@@ -77,7 +77,5 @@ Route::middleware(['auth'])->group(function ()
                 ->name('show');
         }
     );
-
-    Route::get('/home', [App\Http\Controllers\Home\HomeController::class, 'index'])->name('home');
 });
 Auth::routes();
