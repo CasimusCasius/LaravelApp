@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Game;
 
+use App\Facade\Game;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Repository\GameRepository;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Controller;
 class GameController extends Controller
 {
     private GameRepository $gameRepository;
+    private int $itemsPerPage = 10;
 
     public function __construct(GameRepository $repository)
     {
@@ -18,7 +20,7 @@ class GameController extends Controller
 
     public function index(Request $request): View
     {
-        return view('game.list', ['games' => $this->gameRepository->allPaginated(10)]);
+        return view('game.list', ['games' => Game::allPaginated($this->itemsPerPage)]);
     }
 
     public function dashboard(): View
