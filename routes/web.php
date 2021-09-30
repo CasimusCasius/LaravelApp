@@ -77,5 +77,25 @@ Route::middleware(['auth'])->group(function ()
                 ->name('show');
         }
     );
+
+    Route::group(
+        [
+            'prefix' => 'games',
+            'namespace' => 'Game',
+            'as' => 'games.',
+        ],
+        function ()
+        {
+            Route::get('dashboard', 'GameController@dashboard')
+                ->name('dashboard');
+
+            Route::get('', 'GameController@index')
+                ->name('list')
+                ->middleware([RequestPage::class]);
+
+            Route::get('{game}', 'GameController@show')
+                ->name('show');
+        }
+    );
 });
 Auth::routes();
