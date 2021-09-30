@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Game;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 

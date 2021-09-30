@@ -4,61 +4,17 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Models\Game;
-
-class GameRepository
+interface GameRepository
 {
-    private Game $gameModel;
+    public function get(int $id);
 
-    public function __construct(Game $model)
-    {
-        $this->gameModel = $model;
-    }
+    public function all();
 
-    public function get(int $id)
-    {
-        return $this->gameModel->find($id);
-    }
+    public function allPaginated(int $itemsPerPage);
 
-    public function all()
-    {
-        return $this->gameModel->with('genre')
-            ->orderBy('created_at')->get();
-    }
+    public function best();
 
-    public function allPaginated(int $itemsPerPage)
-    {
-        return $this->gameModel->with('genre')
-            ->orderBy('created_at')
-            ->paginate($itemsPerPage);
-    }
+    public function stats();
 
-    public function best()
-    {
-        return $this->gameModel->best()->get();
-    }
-
-    public function stats()
-    {
-        return [
-            'count' => $this->gameModel->count(),
-            'countScoreGt7' => $this->gameModel->where('score', '>', 7)->count(),
-            'max' => $this->gameModel->max('score'),
-            'min' => $this->gameModel->min('score'),
-            'avg' => $this->gameModel->avg('score')
-        ];
-    }
-
-    public function scoreStats()
-    {
-        return $this->gameModel
-            ->select(
-                'score',
-                $this->gameModel->raw('count(*) as count')
-            )
-            ->groupBy('score')
-            ->having('count', '>=', 10)
-            ->orderBy('count', 'desc')
-            ->get();
-    }
+    public function scoreStats();
 }
