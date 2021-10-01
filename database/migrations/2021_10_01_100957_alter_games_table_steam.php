@@ -17,7 +17,7 @@ class AlterGamesTableSteam extends Migration
         DB::table('genres')->truncate();
 
         Schema::dropIfExists('games');
-        Schema::table('games', function (Blueprint $table)
+        Schema::create('games', function (Blueprint $table)
         {
             $table->id();
             $table->integer('steam_appid')->index();
@@ -70,7 +70,7 @@ class AlterGamesTableSteam extends Migration
             $table->integer('developer_id')->index();
             $table->index(['game_id', 'developer_id']);
         });
-        Schema::create('screenschots', function (Blueprint $table)
+        Schema::create('screenshots', function (Blueprint $table)
         {
             $table->id();
             $table->integer('game_id')->index();
