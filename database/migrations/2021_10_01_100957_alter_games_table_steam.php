@@ -34,7 +34,7 @@ class AlterGamesTableSteam extends Migration
             $table->string('metacritic_score', 10)->nullable();
             $table->string('metacritic_url', 150)->nullable();
             $table->string('relase_date', 30);
-            $table->string('languages', 100);
+            $table->string('languages', 100)->nullable();
             $table->timestamps();
         });
 
