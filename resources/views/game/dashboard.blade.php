@@ -22,7 +22,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-item-center">
                         <div class="col mr-2">
-                            <div class="text-xs fw-bold text-primary text-uppercase mb-1">Liczba gier 7+</div>
+                            <div class="text-xs fw-bold text-primary text-uppercase mb-1">Liczba gier 70+</div>
                             <div class="h5 mb-0 fw-bold text-grey-800">{{$stats['countScoreGt7']}}</div>
                         </div>
                         <div class="col-auto">
@@ -91,7 +91,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($scoreStats ?? [] as $statRow )
+                        @foreach ($scoreStats as $statRow )
+
                         <tr>
                             <td>{{$statRow->score}}</td>
                             <td>{{$statRow->count}}</td>
@@ -115,9 +116,10 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Lp</th>
+                               <th>Lp</th>
                                 <th>Tytuł</th>
                                 <th>Ocena</th>
+                                <th>Steam Id</th>
                                 <th>Kategoria</th>
                                 <th>Opcje</th>
                             </tr>
@@ -127,6 +129,7 @@
                                 <th>Lp</th>
                                 <th>Tytuł</th>
                                 <th>Ocena</th>
+                                <th>Steam Id</th>
                                 <th>Kategoria</th>
                                 <th>Opcje</th>
                             </tr>
@@ -135,9 +138,10 @@
                             @foreach ($bestGames ?? []  as $game)
                                 <tr>
                                     <td>{{ $loop->iteration}}</td>
-                                    <td>{{ $game->title}}</td>
+                                    <td>{{ $game->name}}</td>
                                     <td>{{ $game->score}}</td>
-                                    <td>{{ $game->genre->name}}</td>
+                                    <td>{{ $game->steamId}}</td>
+                                    <td>{{ $game->genres->implode('name', ', ')}}</td>
                                     <td>
                                         <a href="{{route('games.show',['game'=>$game->id])}}">Szczegóły</a>
                                     </td>

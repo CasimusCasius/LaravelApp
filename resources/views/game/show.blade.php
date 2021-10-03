@@ -7,15 +7,18 @@
         <div class="card-body">
             <ul>
                 <li>id: {{$game->id}}</li>
-                <li>Nazwa: {{$game->title}}</li>
-                <li>Wydawca: {{$game->publisher}}</li>
-                <li>Kategoria: {{$game->genre->name}}</li>
-                <li>
-                    Opis:
-                    <div>{{$game->description}}</div>
-                </li>
+                <li>Nazwa: {{$game->name}}</li>
+                <li>Wydawca: {{$game->publishers->implode('name',', ')}}</li>
+                <li>Gatunek: {{$game->genres->implode('name', ', ')}}</li>
             </ul>
-
+            <div class="my-4">
+                <h4>Krótki opis</h4>
+                <div class="mx-2"{!! $game->short_description !!}></div>
+            </div>
+            <div class="my-4">
+                <h4>Opis</h4>
+                <div class="mx-2"{!! $game->description !!}></div>
+            </div>
             <a href="{{route('games.list')}}" class="btn btn-light">Lista Gier</a>
         </div>
     @else

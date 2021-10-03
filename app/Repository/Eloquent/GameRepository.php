@@ -23,13 +23,13 @@ class GameRepository implements GameRepositoryInterface
 
     public function all()
     {
-        return $this->gameModel->with('genre')
+        return $this->gameModel->with('genres')
             ->orderBy('created_at')->get();
     }
 
     public function allPaginated(int $itemsPerPage)
     {
-        return $this->gameModel->with('genre')
+        return $this->gameModel->with('genres')->distinct()
             ->orderBy('created_at')
             ->paginate($itemsPerPage);
     }
@@ -43,23 +43,26 @@ class GameRepository implements GameRepositoryInterface
     {
         return [
             'count' => $this->gameModel->count(),
-            'countScoreGt7' => $this->gameModel->where('score', '>', 7)->count(),
-            'max' => $this->gameModel->max('score'),
-            'min' => $this->gameModel->min('score'),
-            'avg' => $this->gameModel->avg('score')
+            'countScoreGt7' => $this->gameModel->where('metacritic_score', '>=', 70)->count(),
+            'max' => $this->gameModel->max('metacritic_score'),
+            'min' => $this->gameModel->min('metacritic_score'),
+            'avg' => $this->gameModel->avg('metacritic_score')
         ];
     }
 
     public function scoreStats()
     {
-        return $this->gameModel
+        $result = $this->gameModel
             ->select(
-                'score',
+                'metacritic_score',
                 $this->gameModel->raw('count(*) as count')
-            )
-            ->groupBy('score')
-            ->having('count', '>=', 10)
+            )->whereNotNull('metacritic_score')
+            ->groupBy('metacritic_score')
+            ->having('count', '>=', 80)
             ->orderBy('count', 'desc')
             ->get();
+
+
+        return $result;
     }
 }

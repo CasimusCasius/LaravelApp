@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Genre extends Model
 {
-    public function games(): ?HasMany
+    public function games()
     {
-        return $this->hasMany(Game::class);
+        return $this->belongsToMany('App\Models\Game', 'gameGenres');
     }
 }
