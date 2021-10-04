@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 class GameController extends Controller
 {
     private GameRepository $gameRepository;
-    private int $itemsPerPage = 10;
+    private int $itemsPerPage = 15;
 
     public function __construct(GameRepository $repository)
     {
@@ -20,7 +20,21 @@ class GameController extends Controller
 
     public function index(Request $request): View
     {
-        return view('game.list', ['games' => Game::allPaginated($this->itemsPerPage)]);
+
+        $phrase = $request->get('phrase');
+        $type = $request->get('type', GameRepository::TYPE_DEFAULT);
+
+        $result = $this->gameRepository->filterBy($phrase, $type, $this->itemsPerPage)
+            ->appends([
+                'phrase' => $phrase,
+                'type' => $type
+            ]);
+
+        return view('game.list', [
+            'games' => $result,
+            'phrase' => $phrase,
+            'type' => $type
+        ]);
     }
 
     public function dashboard(): View

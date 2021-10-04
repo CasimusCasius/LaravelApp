@@ -29,14 +29,37 @@ class GameRepository implements GameRepositoryInterface
 
     public function allPaginated(int $itemsPerPage)
     {
-        return $this->gameModel->with('genres')->distinct()
+        return $this->gameModel->with('genres')
             ->orderBy('created_at')
             ->paginate($itemsPerPage);
     }
 
+    public function filterBy(?string $phrase, string $type = self::TYPE_DEFAULT, int $itemsPerPage = 15)
+    {
+        $query = $this->gameModel->with('genres')
+            ->orderBy('created_at');
+
+        if (!in_array($type, self::USABLE_TYPES))
+        {
+            $type = self::TYPE_DEFAULT;
+        }
+
+        if ($type !== self::TYPE_ALL)
+        {
+            $query->where('type', $type);
+        }
+
+
+        if ($phrase)
+        {
+            $query->where('name', 'like', '%' . $phrase . '%');
+        }
+        return $query->paginate($itemsPerPage);
+    }
+
     public function best()
     {
-        return $this->gameModel->best()->get();
+        return $this->gameModel->with('genres')->best()->get();
     }
 
     public function stats()
@@ -61,7 +84,6 @@ class GameRepository implements GameRepositoryInterface
             ->having('count', '>=', 80)
             ->orderBy('count', 'desc')
             ->get();
-
 
         return $result;
     }
