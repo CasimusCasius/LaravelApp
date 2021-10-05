@@ -41,7 +41,8 @@ class UpdateUserProfile extends FormRequest
                 'max:50',
                 new AlphaSpaces(),
             ],
-            'phone' => 'max:15'
+            'phone' => 'nullable|max:15',
+            'avatar' => 'nullable|file|image'
         ];
     }
 

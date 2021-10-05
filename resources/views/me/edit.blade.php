@@ -15,7 +15,25 @@
 
     <form method="POST" action="{{ route('me.update') }}" enctype="multipart/form-data">
     @csrf
-        <img src="/images/avatar.png" class="rounded mx-auto d-block">
+        @if ($user->avatar)
+            <img src="{{asset('storage/'.$user->avatar)}}" class="rounded mx-auto d-block user-avatar" >
+        @else
+            <img src="/images/avatar.png" class="rounded mx-auto d-block">
+        @endif
+
+        <div class="form-group">
+            <label for="avatar" class="col-md-1 col-form-label text-md-right">Wybierz avatar...</label>
+            <input
+                type="file"
+                class="form-control-file"
+                id="name"
+                name="avatar">
+
+                @error('avatar')
+                    <div class="invalid-feedback d-block">{{$message}}</div>
+                @enderror
+        </div>
+
         <div class="form-group row">
             <label for="name" class="col-md-1 col-form-label text-md-right">Nazwa</label>
 
