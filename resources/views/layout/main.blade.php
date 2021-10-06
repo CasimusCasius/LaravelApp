@@ -81,7 +81,7 @@
 
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid">
+                    <div class="container-fluid pt-3">
                         @include('shared.messages')
                         @yield('content')
                     </div>

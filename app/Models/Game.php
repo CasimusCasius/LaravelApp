@@ -61,6 +61,8 @@ class Game extends Model
         return $this->belongsToMany('App\Models\Publisher', 'gamePublishers');
     }
 
+
+
     //scopes
 
     public function scopeBest(Builder $query): Builder

@@ -1,7 +1,7 @@
 @extends('me.card')
 @section('profile')
 <div class="card-body">
-    {{-- @if ($errors->any())
+    @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -10,7 +10,7 @@
                 @endforeach
             </ul>
         </div>
-    @endif --}}
+    @endif
 
 
     <form method="POST" action="{{ route('me.update') }}" enctype="multipart/form-data">

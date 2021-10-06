@@ -29,12 +29,17 @@ Route::middleware(['auth'])->group(function ()
         Route::get('profile', 'UserController@profile')->name('profile');
         Route::get('edit', 'UserController@edit')->name('edit');
         Route::post('update', 'UserController@update')->name('update');
+
+        Route::get('games', 'GameController@list')->name('games.list');
+        Route::post('games', 'GameController@add')->name('games.add');
+        Route::delete('games', 'GameController@remove')->name('games.remove');
+        Route::post('games/rate', 'GameController@rate')->name('games.rate');
     });
 
 
     // Users
-    // Route::get('users', 'User\UserController@list')
-    //     ->name('get.users');
+    Route::get('users', 'User\UserController@list')
+        ->name('get.users');
 
     // Route::get('users/{userId}', 'User\UserController@show')
     //     ->name('get.user.show');

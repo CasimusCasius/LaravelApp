@@ -40,7 +40,7 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Tytuł</th>
-                                <th>Ocena</th>
+                                <th>Ocena metacritic</th>
                                 <th>Typ</th>
                                 <th>Kategoria</th>
                                 <th>Opcje</th>
@@ -50,7 +50,7 @@
                             <tr>
                                <th>Id</th>
                                 <th>Tytuł</th>
-                                <th>Ocena</th>
+                                <th>Ocena metacritic</th>
                                 <th>Typ</th>
                                 <th>Kategoria</th>
                                 <th>Opcje</th>
@@ -61,7 +61,7 @@
                                 <tr>
                                     <td>{{ $game->id}}</td>
                                     <td>{{ $game->name}}</td>
-                                    <td>{{ $game->score}}</td>
+                                    <td>{{ $game->score ?? 'brak'}}</td>
                                     <td>{{ $game->type}}</td>
                                     <td>{{ $game->genres->implode ('name',', ')}}</td>
                                     <td>
