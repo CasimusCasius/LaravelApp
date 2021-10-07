@@ -38,11 +38,11 @@ Route::middleware(['auth'])->group(function ()
 
 
     // Users
-    Route::get('users', 'User\UserController@list')
+    Route::get('users', 'UserController@list')
         ->name('get.users');
 
-    // Route::get('users/{userId}', 'User\UserController@show')
-    //     ->name('get.user.show');
+    Route::get('users/{userId}', 'UserController@show')
+        ->name('get.user.show');
 
     // //Route::get('users/{id}/profile', 'User\ProfilController@show')
     // //    ->name('get.user.profile');

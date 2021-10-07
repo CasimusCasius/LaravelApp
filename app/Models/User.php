@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Game::class, 'userGames')->withPivot('rate')->with('genres');
     }
+
+    public function isAdmin(): bool
+    {
+        return (bool) $this->admin;
+    }
 }
