@@ -32,6 +32,7 @@ class UserController extends Controller
         Gate::authorize('admin-level');
         $userModel = $this->userRepository->get($userId);
         Gate::authorize('view', $userModel);
+
         return view('user.show', [
             'user' => $userModel
         ]);
